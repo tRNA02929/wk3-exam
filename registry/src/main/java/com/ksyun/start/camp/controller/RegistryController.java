@@ -28,7 +28,7 @@ public class RegistryController {
     }
 
     @RequestMapping("/api/unregister")
-    public String unregister(ServiceEntity serviceEntity) {
+    public Object unregister(ServiceEntity serviceEntity) {
         if (!vaild(serviceEntity)) {
             return "invalid param";
         }
@@ -50,6 +50,7 @@ public class RegistryController {
 
     private boolean vaild(ServiceEntity serviceEntity) {
         return serviceEntity != null
+                && serviceEntity.getServiceId() != null
                 && serviceEntity.getServiceName() != null
                 && serviceEntity.getIpAddress() != null
                 && serviceEntity.getPort() != null;
