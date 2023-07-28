@@ -41,7 +41,7 @@ public class RegistryController {
     }
 
     @RequestMapping("/api/discovery")
-    public String discovery(String serviceName) {
+    public Object discovery(String serviceName) {
         return registryService.discovery(serviceName);
     }
 
