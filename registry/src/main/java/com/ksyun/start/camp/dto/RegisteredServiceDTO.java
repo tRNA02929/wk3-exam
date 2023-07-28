@@ -21,7 +21,7 @@ public class RegisteredServiceDTO {
     /**
      * 添加服务：
      * 服务的id相同，就认为是同一个服务
-     * 服务的ip和端口号一样，就认为是同一个服务
+     * 服务的地址一样，就认为是同一个服务
      *
      * @param service
      * @return
@@ -32,7 +32,7 @@ public class RegisteredServiceDTO {
 
     /**
      * 删除服务：
-     * 必须服务的id,服务名，ip，端口号一样，才能删除
+     * 必须服务的id,服务名，地址一样，才能删除
      *
      * @param service
      * @return
@@ -42,12 +42,29 @@ public class RegisteredServiceDTO {
         for (ServiceEntity serviceEntity : services) {
             if (serviceEntity.getServiceId().equals(service.getServiceId())
                     && serviceEntity.getServiceName().equals(service.getServiceName())
-                    && serviceEntity.getIpAddress().equals(service.getIpAddress())
-                    && serviceEntity.getPort().equals(service.getPort())) {
+                    && serviceEntity.equalsAddress(service.getIpAddress(), service.getPort())) {
                 temp = serviceEntity;
                 break;
             }
         }
         return services.remove(temp);
+    }
+
+    /**
+     * 客户端发送心跳：
+     * 必须服务的id,地址一样，才能更新心跳时间
+     *
+     * @param service
+     * @return
+     */
+    public boolean heartbeat(ServiceEntity service) {
+        for (ServiceEntity serviceEntity : services) {
+            if (serviceEntity.getServiceId().equals(service.getServiceId())
+                    && serviceEntity.equalsAddress(service.getIpAddress(), service.getPort())) {
+                serviceEntity.setHeartBeatTime(System.currentTimeMillis());
+                return true;
+            }
+        }
+        return false;
     }
 }
