@@ -36,10 +36,7 @@ public class RegistryController {
     }
 
     @RequestMapping("/api/heartbeat")
-    public String heartbeat(ServiceEntity serviceEntity) {
-        if (!vaild(serviceEntity)) {
-            return "invalid param";
-        }
+    public Object heartbeat(ServiceEntity serviceEntity) {
         return registryService.heartbeat(serviceEntity);
     }
 

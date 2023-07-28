@@ -22,9 +22,9 @@ public class RegistryService {
         return registeredServices.getServices().toArray();
     }
 
-    public String heartbeat(ServiceEntity serviceEntity) {
+    public Object heartbeat(ServiceEntity serviceEntity) {
         // TODO
-        return "heartbeat";
+        return registeredServices.heartbeat(serviceEntity);
     }
 
     public String discovery(String serviceName) {
