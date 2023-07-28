@@ -12,6 +12,7 @@ public class RegistryService {
     private RegisteredServiceDTO registeredServices;
 
     public Object register(ServiceEntity serviceEntity) {
+        registeredServices.clearExpiredService();
         serviceEntity.setHeartBeatTime(System.currentTimeMillis());
         boolean b = registeredServices.addService(serviceEntity);
         return registeredServices.getServices().toArray();
@@ -23,12 +24,12 @@ public class RegistryService {
     }
 
     public Object heartbeat(ServiceEntity serviceEntity) {
-        // TODO
+        registeredServices.clearExpiredService();
         return registeredServices.heartbeat(serviceEntity);
     }
 
-    public String discovery(String serviceName) {
-        // TODO
-        return "discovery";
+    public Object discovery(String serviceName) {
+        registeredServices.clearExpiredService();
+        return registeredServices.discovery(serviceName);
     }
 }
