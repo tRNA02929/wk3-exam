@@ -35,6 +35,20 @@ public class ServiceEntity {
     private Long heartBeatTime;
 
 
+    /**
+     * 判断两个服务地址是否相同
+     * 只有当ipAddress和port都相同时才代表地址相同
+     * @param ipAddress, port
+     * @return
+     */
+    public boolean equalsAddress(String ipAddress, Integer port) {
+        if (Objects.equals(ipAddress, this.getIpAddress())
+                && Objects.equals(port, this.getPort())) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ServiceEntity) {
@@ -42,8 +56,7 @@ public class ServiceEntity {
             if (Objects.equals(serviceEntity.getServiceId(), this.getServiceId())) {
                 return true;
             }
-            if (Objects.equals(serviceEntity.getIpAddress(), this.getIpAddress())
-                    && Objects.equals(serviceEntity.getPort(), this.getPort())) {
+            if (equalsAddress(serviceEntity.getIpAddress(), serviceEntity.getPort())) {
                 return true;
             }
         }
