@@ -1,0 +1,39 @@
+package com.ksyun.start.camp.controller;
+
+import com.ksyun.start.camp.entity.ServiceEntity;
+import com.ksyun.start.camp.service.RegistryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class RegistryController {
+
+    @Autowired
+    private RegistryService registryService;
+
+    @RequestMapping("/")
+    public String hello() {
+        return "hello";
+    }
+
+    @RequestMapping("/api/register")
+    public String register(ServiceEntity serviceEntity) {
+        return registryService.register(serviceEntity);
+    }
+
+    @RequestMapping("/api/unregister")
+    public String unregister(ServiceEntity serviceEntity) {
+        return registryService.unregister(serviceEntity);
+    }
+
+    @RequestMapping("/api/heartbeat")
+    public String heartbeat(ServiceEntity serviceEntity) {
+        return registryService.heartbeat(serviceEntity);
+    }
+
+    @RequestMapping("/api/discovery")
+    public String discovery(String serviceName) {
+        return registryService.discovery(serviceName);
+    }
+}
