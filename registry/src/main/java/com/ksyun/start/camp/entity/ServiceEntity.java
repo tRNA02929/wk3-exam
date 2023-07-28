@@ -52,6 +52,6 @@ public class ServiceEntity {
 
     @Override
     public int hashCode() {
-        return serviceId;
+        return 0;
     }
 }
