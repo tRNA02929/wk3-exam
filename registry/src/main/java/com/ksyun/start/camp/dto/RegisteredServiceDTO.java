@@ -19,10 +19,9 @@ public class RegisteredServiceDTO {
     }
 
     public boolean addService(ServiceEntity service) {
-        if (services != null) {
-            services.add(service);
-            return true;
+        if (service.getServiceId() == null) {
+            service.setServiceId(services.size() + 1);
         }
-        return false;
+        return services.add(service);
     }
 }
