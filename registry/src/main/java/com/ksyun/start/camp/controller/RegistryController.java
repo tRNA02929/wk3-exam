@@ -21,21 +21,37 @@ public class RegistryController {
 
     @RequestMapping("/api/register")
     public Object register(ServiceEntity serviceEntity) {
+        if (!vaild(serviceEntity)) {
+            return "invalid param";
+        }
         return registryService.register(serviceEntity);
     }
 
     @RequestMapping("/api/unregister")
     public String unregister(ServiceEntity serviceEntity) {
+        if (!vaild(serviceEntity)) {
+            return "invalid param";
+        }
         return registryService.unregister(serviceEntity);
     }
 
     @RequestMapping("/api/heartbeat")
     public String heartbeat(ServiceEntity serviceEntity) {
+        if (!vaild(serviceEntity)) {
+            return "invalid param";
+        }
         return registryService.heartbeat(serviceEntity);
     }
 
     @RequestMapping("/api/discovery")
     public String discovery(String serviceName) {
         return registryService.discovery(serviceName);
+    }
+
+    private boolean vaild(ServiceEntity serviceEntity) {
+        return serviceEntity != null
+                && serviceEntity.getServiceName() != null
+                && serviceEntity.getIpAddress() != null
+                && serviceEntity.getPort() != null;
     }
 }
