@@ -3,10 +3,12 @@ package com.ksyun.start.camp.controller;
 import com.ksyun.start.camp.entity.ServiceEntity;
 import com.ksyun.start.camp.service.RegistryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
 public class RegistryController {
 
     @Autowired
@@ -18,7 +20,7 @@ public class RegistryController {
     }
 
     @RequestMapping("/api/register")
-    public String register(ServiceEntity serviceEntity) {
+    public Object register(ServiceEntity serviceEntity) {
         return registryService.register(serviceEntity);
     }
 
