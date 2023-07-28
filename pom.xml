@@ -19,8 +19,8 @@
     <url>https://www.ksyun.com</url>
 
     <modules>
-<!--        <module>registry</module>-->
-        <module>time-service</module>
+        <module>registry</module>
+<!--        <module>time-service</module>-->
 <!--        <module>client</module>-->
 <!--        <module>logging-service</module>-->
     </modules>
