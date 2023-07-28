@@ -12,15 +12,14 @@ public class RegistryService {
     private RegisteredServiceDTO registeredServices;
 
     public Object register(ServiceEntity serviceEntity) {
-        // TODO
         serviceEntity.setHeartBeatTime(System.currentTimeMillis());
         boolean b = registeredServices.addService(serviceEntity);
-        return serviceEntity;
+        return registeredServices.getServices().toArray();
     }
 
-    public String unregister(ServiceEntity serviceEntity) {
-        // TODO
-        return "unregister";
+    public Object unregister(ServiceEntity serviceEntity) {
+        boolean b = registeredServices.removeService(serviceEntity);
+        return registeredServices.getServices().toArray();
     }
 
     public String heartbeat(ServiceEntity serviceEntity) {
