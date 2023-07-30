@@ -23,7 +23,7 @@
         <module>time-service</module>
         <module>rest</module>
         <module>client</module>
-        <!--        <module>logging-service</module>-->
+        <module>logging-service</module>
     </modules>
 
     <properties>
