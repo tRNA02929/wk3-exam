@@ -7,6 +7,6 @@ public interface ClientService {
      *
      * @return 相关信息
      */
-    String getInfo();
+    Object getInfo();
 
 }

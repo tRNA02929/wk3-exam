@@ -2,6 +2,9 @@ package com.ksyun.start.camp.service;
 
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.ksyun.start.camp.ServiceAppRunner.serviceId;
 
 /**
@@ -12,7 +15,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public String getInfo() {
+    public Object getInfo() {
 
         // 开始编写你的逻辑，下面是提示
         // 1. 调用 TimeService 获取远端服务返回的时间
@@ -21,6 +24,12 @@ public class ClientServiceImpl implements ClientService {
         String result = "Hello Kingsoft Clound Star Camp - " +
                 serviceId + " - " +
                 new TimeServiceImpl().getDateTime("full");
-        return result;
+        if (result == null) {
+            return null;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("serviceId", serviceId);
+        map.put("result", result);
+        return map;
     }
 }

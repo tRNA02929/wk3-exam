@@ -1,7 +1,7 @@
 package com.ksyun.start.camp;
 
+import com.ksyun.start.camp.rest.RestResult;
 import com.ksyun.start.camp.service.ClientServiceImpl;
-import com.ksyun.start.camp.service.TimeServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +22,10 @@ public class ClientController {
     // 提示：调用 ClientService
     @GetMapping("/api/getInfo")
     public Object getInfo() {
-        return new ClientServiceImpl().getInfo();
+        Object data = new ClientServiceImpl().getInfo();
+        if (data == null) {
+            return RestResult.failure().data(data).descr("获取信息失败");
+        }
+        return RestResult.success().data(data).descr("获取信息成功");
     }
 }
