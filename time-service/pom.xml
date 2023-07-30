@@ -22,7 +22,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.ksyun.train</groupId>
+            <groupId>com.ksyun.start.camp</groupId>
             <artifactId>rest</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
