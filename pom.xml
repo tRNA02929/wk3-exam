@@ -21,7 +21,8 @@
     <modules>
         <module>registry</module>
         <module>time-service</module>
-<!--        <module>client</module>-->
+        <module>rest</module>
+        <!--        <module>client</module>-->
 <!--        <module>logging-service</module>-->
     </modules>
 
