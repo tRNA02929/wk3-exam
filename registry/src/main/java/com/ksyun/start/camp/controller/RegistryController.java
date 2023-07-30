@@ -4,8 +4,7 @@ import com.ksyun.start.camp.entity.ServiceEntity;
 import com.ksyun.start.camp.service.RegistryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -19,24 +18,31 @@ public class RegistryController {
         return "hello";
     }
 
-    @RequestMapping("/api/register")
-    public Object register(ServiceEntity serviceEntity) {
+    //    @RequestMapping
+    @PostMapping("/api/test")
+    public Object Test(@RequestBody String serviceName) {
+        System.out.println(serviceName);
+        return serviceName;
+    }
+
+    @PostMapping("/api/register")
+    public Object register(@RequestBody ServiceEntity serviceEntity) {
         if (!vaild(serviceEntity)) {
             return "invalid param";
         }
         return registryService.register(serviceEntity);
     }
 
-    @RequestMapping("/api/unregister")
-    public Object unregister(ServiceEntity serviceEntity) {
+    @PostMapping("/api/unregister")
+    public Object unregister(@RequestBody ServiceEntity serviceEntity) {
         if (!vaild(serviceEntity)) {
             return "invalid param";
         }
         return registryService.unregister(serviceEntity);
     }
 
-    @RequestMapping("/api/heartbeat")
-    public Object heartbeat(ServiceEntity serviceEntity) {
+    @PostMapping("/api/heartbeat")
+    public Object heartbeat(@RequestBody ServiceEntity serviceEntity) {
         return registryService.heartbeat(serviceEntity);
     }
 

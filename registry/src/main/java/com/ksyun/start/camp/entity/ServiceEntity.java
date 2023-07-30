@@ -3,16 +3,17 @@ package com.ksyun.start.camp.entity;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Data
 @Builder
-public class ServiceEntity {
+public class ServiceEntity implements Serializable {
 
     /**
      * 服务唯一标识，即服务ID
      */
-    private Integer serviceId;
+    private Long serviceId;
 
     /**
      * 服务名称
@@ -38,6 +39,7 @@ public class ServiceEntity {
     /**
      * 判断两个服务地址是否相同
      * 只有当ipAddress和port都相同时才代表地址相同
+     *
      * @param ipAddress, port
      * @return
      */
