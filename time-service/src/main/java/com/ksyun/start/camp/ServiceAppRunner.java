@@ -29,7 +29,8 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Value("${spring.application.name}")
     private String serviceName;
 
-    private long serviceId = UUID.randomUUID().getMostSignificantBits();
+    static long serviceId;
+
     private String ipAddress = InetAddress.getLocalHost().getHostAddress();
 
     @Value("${server.port}")
@@ -38,6 +39,10 @@ public class ServiceAppRunner implements ApplicationRunner {
     HttpEntity<HashMap<String, Object>> httpEntity;
 
     public ServiceAppRunner() throws UnknownHostException {
+    }
+
+    static {
+        serviceId = UUID.randomUUID().getMostSignificantBits();
     }
 
     private void initialHttpEntity() {
@@ -54,7 +59,6 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // 1. 向 registry 服务注册当前服务
-        // TODO
         initialHttpEntity();
         Object o = restTemplate.exchange("http://localhost:8200/api/register",
                 HttpMethod.POST, httpEntity, Object.class);
@@ -64,7 +68,6 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Scheduled(cron = "*/3 * * * * ?")
     private void printNowDate() {
         // 2. 定期发送心跳逻辑
-        // TODO
         Object o = restTemplate.exchange("http://localhost:8200/api/heartbeat",
                 HttpMethod.POST, httpEntity, Object.class);
         System.out.println(o);
