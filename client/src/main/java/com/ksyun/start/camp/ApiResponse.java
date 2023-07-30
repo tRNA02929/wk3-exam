@@ -1,5 +1,6 @@
 package com.ksyun.start.camp;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,19 +8,11 @@ import lombok.NoArgsConstructor;
  * 代表此 API 的返回对象
  */
 @Data
-@NoArgsConstructor
+@Builder
 public class ApiResponse {
 
-    /**
-     * 代表此 API 的响应返回码
-     * 200 表示成功，非 200 表示失败
-     */
-    private int code;
+    private Long serviceId;
 
-    private String data;
+    private String result;
 
-    public ApiResponse(int code, String data) {
-        this.code = code;
-        this.data = data;
-    }
 }
