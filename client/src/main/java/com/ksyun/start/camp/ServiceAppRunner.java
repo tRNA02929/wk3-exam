@@ -29,7 +29,7 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Value("${spring.application.name}")
     private String serviceName;
 
-    static long serviceId;
+    public static long serviceId;
 
     private String ipAddress = InetAddress.getLocalHost().getHostAddress();
 
