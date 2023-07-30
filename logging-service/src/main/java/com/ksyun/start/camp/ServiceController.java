@@ -1,16 +1,44 @@
 package com.ksyun.start.camp;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ksyun.start.camp.entity.LogEntity;
+import com.ksyun.start.camp.rest.RestResult;
+import com.ksyun.start.camp.service.LoggingServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 实现日志服务 API
  */
 @RestController
-@RequestMapping("/api")
 public class ServiceController {
 
-    // TODO: 实现日志服务 API
+    @Autowired
+    private LoggingServiceImpl loggingService;
 
+    // TODO: 实现日志服务 API
+    @RequestMapping("/")
+    public String index() {
+        return "this is logging service";
+    }
+
+    @PostMapping("/api/logging")
+    public Object logging(@RequestBody LogEntity logEntity) {
+        LogEntity log = loggingService.logging(logEntity);
+        if (log == null) {
+            return RestResult.failure().descr("logging failed");
+        }
+        return RestResult.success().descr("logging success").data(log);
+    }
+
+    @GetMapping("/api/list")
+    public Object list(String service) {
+        List list = loggingService.list(service);
+        if (list == null) {
+            return RestResult.failure().descr("日志获取失败");
+        }
+        return RestResult.success().descr("日志获取成功").data(list);
+    }
 
 }
