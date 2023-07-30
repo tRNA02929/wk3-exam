@@ -1,24 +1,75 @@
 package com.ksyun.start.camp;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * 服务启动运行逻辑
  */
 @Component
+@EnableScheduling
 public class ServiceAppRunner implements ApplicationRunner {
+
+    private RestTemplate restTemplate = new RestTemplate();
+
+    @Value("${spring.application.name}")
+    private String serviceName;
+
+    static long serviceId;
+
+    private String ipAddress = InetAddress.getLocalHost().getHostAddress();
+
+    @Value("${server.port}")
+    private int port;
+
+    HttpEntity<HashMap<String, Object>> httpEntity;
+
+    public ServiceAppRunner() throws UnknownHostException {
+    }
+
+    static {
+        serviceId = UUID.randomUUID().getMostSignificantBits();
+    }
+
+    private void initialHttpEntity() {
+        HashMap<String, Object> forObject = new HashMap<>();
+        forObject.put("serviceName", serviceName);
+        forObject.put("serviceId", serviceId);
+        forObject.put("ipAddress", ipAddress);
+        forObject.put("port", port);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpEntity = new HttpEntity<>(forObject, httpHeaders);
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
-        // 此处代码会在 Boot 应用启动时执行
-
-        // 开始编写你的逻辑，下面是提示
         // 1. 向 registry 服务注册当前服务
-        // 2. 定期发送心跳逻辑
+        initialHttpEntity();
+        Object o = restTemplate.exchange("http://localhost:8200/api/register",
+                HttpMethod.POST, httpEntity, Object.class);
+        System.out.println(o);
+    }
 
-        // TODO
+    @Scheduled(cron = "*/3 * * * * ?")
+    private void printNowDate() {
+        // 2. 定期发送心跳逻辑
+        Object o = restTemplate.exchange("http://localhost:8200/api/heartbeat",
+                HttpMethod.POST, httpEntity, Object.class);
+        System.out.println(o);
     }
 }
