@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 日志收集服务
  */
 @SpringBootApplication
-public class ServiceApp {
+public class LogServiceApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServiceApp.class, args);
+        SpringApplication.run(LogServiceApp.class, args);
     }
 }
