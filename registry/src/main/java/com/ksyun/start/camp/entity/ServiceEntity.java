@@ -35,6 +35,10 @@ public class ServiceEntity implements Serializable {
      */
     private Long heartBeatTime;
 
+    /**
+     * 服务轮询次数
+     */
+    private int pollCount;
 
     /**
      * 判断两个服务地址是否相同
