@@ -25,11 +25,11 @@ public class ServiceController {
 
     @PostMapping("/api/logging")
     public Object logging(@RequestBody LogEntity logEntity) {
-        LogEntity log = loggingService.logging(logEntity);
-        if (log == null) {
-            return RestResult.failure().descr("logging failed");
+        boolean b = loggingService.logging(logEntity);
+        if (b) {
+            return RestResult.success().descr("logging success").data(logEntity);
         }
-        return RestResult.success().descr("logging success").data(log);
+        return RestResult.failure().descr("logging failed");
     }
 
     @GetMapping("/api/list")
