@@ -69,6 +69,12 @@ public class RestResult<T> implements Serializable {
         return dto;
     }
 
+    public static RestResult success(Object data, String descr) {
+        RestResult dto = new RestResult();
+        dto.code(RestConsts.DEFAULT_SUCCESS_CODE).msg(RestConsts.SUCCESS_MESSAGE).data(data).descr(descr);
+        return dto;
+    }
+
     public static RestResult failure() {
         RestResult dto = new RestResult();
         dto.code(500).msg(RestConsts.ERROR_MESSAGE);

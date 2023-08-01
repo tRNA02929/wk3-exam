@@ -26,6 +26,6 @@ public class ClientController {
         if (data == null) {
             return RestResult.failure().data(data).descr("获取信息失败");
         }
-        return RestResult.success().data(data).descr("获取信息成功");
+        return RestResult.success(data,"获取信息成功");
     }
 }
