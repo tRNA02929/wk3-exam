@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 时间服务
  */
 @SpringBootApplication
-public class ServiceApp {
+public class TimeServiceApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServiceApp.class, args);
+        SpringApplication.run(TimeServiceApp.class, args);
     }
 }

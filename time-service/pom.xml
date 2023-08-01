@@ -32,7 +32,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.ksyun.start.camp.ServiceApp</mainClass>
+                    <mainClass>com.ksyun.start.camp.TimeServiceApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
