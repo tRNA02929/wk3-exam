@@ -53,9 +53,9 @@ public class RegistryController {
 
     private boolean vaild(ServiceEntity serviceEntity) {
         return serviceEntity != null
-                && serviceEntity.getServiceId() != null
-                && serviceEntity.getServiceName() != null
-                && serviceEntity.getIpAddress() != null
+                && serviceEntity.getServiceId() != null && !serviceEntity.getServiceId().equals("")
+                && serviceEntity.getServiceName() != null && !serviceEntity.getServiceName().equals("")
+                && serviceEntity.getIpAddress() != null && !serviceEntity.getIpAddress().equals("")
                 && serviceEntity.getPort() != null;
     }
 }

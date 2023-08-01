@@ -13,7 +13,7 @@ public class ServiceEntity implements Serializable {
     /**
      * 服务唯一标识，即服务ID
      */
-    private Long serviceId;
+    private String serviceId;
 
     /**
      * 服务名称
