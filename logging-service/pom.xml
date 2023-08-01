@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>com.ksyun.start.camp</groupId>
-    <artifactId>logging--service</artifactId>
+    <artifactId>logging-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>logging-service</name>
 
