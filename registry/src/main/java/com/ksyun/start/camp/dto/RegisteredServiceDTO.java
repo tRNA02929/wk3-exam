@@ -109,10 +109,23 @@ public class RegisteredServiceDTO {
     /**
      * 清除过期服务：
      */
+    @PreDestroy
     public void clearExpiredService() {
-        List<ServiceEntity> expiredServices = services.stream()
-                .filter(serviceEntity -> System.currentTimeMillis() - serviceEntity.getHeartBeatTime() > heart * 1000)
-                .collect(Collectors.toList());
-        services.removeAll(expiredServices);
+        timeServices.removeIf(serviceEntity -> System.currentTimeMillis() - serviceEntity.getHeartBeatTime() > heart * 1000);
+        clients.removeIf(serviceEntity -> System.currentTimeMillis() - serviceEntity.getHeartBeatTime() > heart * 1000);
+    }
+
+    /**
+     * 获取目标服务queue，并清除过期服务：
+     * 懒清除，只有在获取服务时才清除过期服务
+     */
+    private SortedSet<ServiceEntity> getGoalService(String serviceName) {
+        if (serviceName.equals("time-service")) {
+            timeServices.removeIf(serviceEntity -> System.currentTimeMillis() - serviceEntity.getHeartBeatTime() > heart * 1000);
+            return timeServices;
+        } else {
+            clients.removeIf(serviceEntity -> System.currentTimeMillis() - serviceEntity.getHeartBeatTime() > heart * 1000);
+            return clients;
+        }
     }
 }

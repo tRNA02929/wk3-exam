@@ -17,7 +17,7 @@ public class RegistryService {
     private RegisteredServiceDTO registeredServices;
 
     public Object register(ServiceEntity serviceEntity) {
-        registeredServices.clearExpiredService();
+//        registeredServices.clearExpiredService();
         serviceEntity.setHeartBeatTime(System.currentTimeMillis());
         boolean b = registeredServices.addService(serviceEntity);
         if (b) {
@@ -30,7 +30,6 @@ public class RegistryService {
 
     public Object unregister(ServiceEntity serviceEntity) {
         boolean b = registeredServices.removeService(serviceEntity);
-//        return registeredServices.getServices().toArray();
         if (b) {
             log.info("服务注销成功,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
             return RestResult.success(serviceEntity,"服务已注销");
@@ -40,7 +39,7 @@ public class RegistryService {
     }
 
     public Object heartbeat(ServiceEntity serviceEntity) {
-        registeredServices.clearExpiredService();
+//        registeredServices.clearExpiredService();
         boolean b = registeredServices.heartbeat(serviceEntity);
         if (b) {
             log.info("心跳更新成功,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
@@ -51,7 +50,7 @@ public class RegistryService {
     }
 
     public Object discovery(String serviceName) {
-        registeredServices.clearExpiredService();
+//        registeredServices.clearExpiredService();
         List<ServiceEntity> serviceEntities = registeredServices.discovery(serviceName);
         if (serviceEntities != null && serviceEntities.size() > 0) {
             return RestResult.success(serviceEntities,"查询成功");
