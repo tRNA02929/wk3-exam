@@ -69,6 +69,7 @@ public class RestResult<T> implements Serializable {
         return dto;
     }
 
+    @Deprecated
     public static RestResult success(Object data, String descr) {
         RestResult dto = new RestResult();
         dto.code(RestConsts.DEFAULT_SUCCESS_CODE).msg(RestConsts.SUCCESS_MESSAGE).data(data).descr(descr);

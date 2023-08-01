@@ -22,7 +22,7 @@ public class RegistryService {
         boolean b = registeredServices.addService(serviceEntity);
         if (b) {
             log.info("注册成功,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
-            return RestResult.success(serviceEntity,"注册成功");
+            return RestResult.success().descr("注册成功").data(serviceEntity);
         }
         log.info("注册失败,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
         return RestResult.failure().descr("服务已注册").data(serviceEntity);
@@ -32,7 +32,7 @@ public class RegistryService {
         boolean b = registeredServices.removeService(serviceEntity);
         if (b) {
             log.info("服务注销成功,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
-            return RestResult.success(serviceEntity,"服务已注销");
+            return RestResult.success().descr("服务注销成功").data(serviceEntity);
         }
         log.info("服务注销失败,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
         return RestResult.failure().descr("未找到该服务").data(serviceEntity);
@@ -43,7 +43,7 @@ public class RegistryService {
         boolean b = registeredServices.heartbeat(serviceEntity);
         if (b) {
             log.info("心跳更新成功,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
-            return RestResult.success(serviceEntity,"心跳更新成功");
+            return RestResult.success().descr("心跳更新成功").data(serviceEntity);
         }
         log.info("心跳更新失败,服务ID:{},ip:{},端口:{}", serviceEntity.getServiceId(), serviceEntity.getIpAddress(), serviceEntity.getPort());
         return RestResult.failure().descr("心跳更新失败").data(serviceEntity);
@@ -53,7 +53,7 @@ public class RegistryService {
 //        registeredServices.clearExpiredService();
         List<ServiceEntity> serviceEntities = registeredServices.discovery(serviceName);
         if (serviceEntities != null && serviceEntities.size() > 0) {
-            return RestResult.success(serviceEntities,"查询成功");
+            return RestResult.success().descr("服务发现成功").data(serviceEntities);
         }
         return RestResult.failure().descr("未找到该服务").data(serviceEntities);
     }

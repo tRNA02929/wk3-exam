@@ -29,7 +29,7 @@ public class ServiceController {
         if (log == null) {
             return RestResult.failure().descr("logging failed");
         }
-        return RestResult.success(log, "logging success");
+        return RestResult.success().descr("logging success").data(log);
     }
 
     @GetMapping("/api/list")
@@ -38,7 +38,7 @@ public class ServiceController {
         if (list == null) {
             return RestResult.failure().descr("日志获取失败");
         }
-        return RestResult.success(list, "日志获取成功");
+        return RestResult.success().descr("日志获取成功").data(list);
     }
 
 }

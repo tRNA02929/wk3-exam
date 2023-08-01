@@ -24,6 +24,6 @@ public class ServiceController {
                 .serviceId(ServiceAppRunner.serviceId)
                 .result(result)
                 .build();
-        return RestResult.success(apiResponse, "获取时间成功");
+        return RestResult.success().descr("获取时间成功").data(apiResponse);
     }
 }
