@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Data
 @Builder
-public class ServiceEntity implements Serializable {
+public class ServiceEntity implements Serializable, Comparable<ServiceEntity> {
 
     /**
      * 服务唯一标识，即服务ID
@@ -72,5 +72,10 @@ public class ServiceEntity implements Serializable {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    @Override
+    public int compareTo(ServiceEntity o) {
+        return o.getPollCount() - pollCount;
     }
 }
