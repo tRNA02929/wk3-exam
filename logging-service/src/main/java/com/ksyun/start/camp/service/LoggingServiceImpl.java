@@ -3,8 +3,7 @@ package com.ksyun.start.camp.service;
 import com.ksyun.start.camp.entity.LogEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 日志服务的实现
@@ -12,11 +11,15 @@ import java.util.List;
 @Component
 public class LoggingServiceImpl implements LoggingService {
 
-    private List<LogEntity> logList = new ArrayList<>();
+    private Set<LogEntity> logSet;
 
-    public LogEntity logging(LogEntity logEntity) {
-        logList.add(logEntity);
-        return logEntity;
+    public LoggingServiceImpl() {
+        this.logSet = new HashSet<>();
+    }
+
+    public boolean logging(LogEntity logEntity) {
+        logEntity.setLogId(logSet.size());
+        return logSet.add(logEntity);
     }
 
     public List list(String service) {
