@@ -24,14 +24,13 @@ public class LoggingServiceImpl implements LoggingService {
 
     public List list(String service) {
         boolean isAll = service == null || service.isEmpty();
-        List<LogEntity> dataList = new ArrayList<>();
-        for (int i = logList.size() - 1; i >= 0; i--) {
-            LogEntity data = logList.get(i);
-            if (!isAll || service.equals(data.getServiceName())) {
-                dataList.add(data);
-            }
+
+        SortedSet<LogEntity> sortedLogSet = new TreeSet<>(this.logSet);
+        if (isAll) {
+            return new ArrayList(sortedLogSet);
         }
-        return dataList;
+        sortedLogSet.removeIf(data -> !service.equals(data.getServiceName()));
+        return new ArrayList(sortedLogSet);
     }
 
 }
