@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,14 +18,17 @@ public class RegisteredServiceDTO {
     @Value("${heart}")
     private int heart;
 
+    // 使用HashSet，作为存储结构
     // 使用TreeSet，按照轮询次数自动排序
-    private SortedSet<ServiceEntity> clients;
+    private Set<ServiceEntity> clients;
 
-    private SortedSet<ServiceEntity> timeServices;
+    private Set<ServiceEntity> timeServices;
 
     public RegisteredServiceDTO() {
-        this.clients = new TreeSet<>((o1, o2) -> o1.getPollCount() - o2.getPollCount());
-        this.timeServices = new TreeSet<>((o1, o2) -> o1.getPollCount() - o2.getPollCount());
+//        this.clients = new TreeSet<>((o1, o2) -> o1.getPollCount() - o2.getPollCount());
+//        this.timeServices = new TreeSet<>((o1, o2) -> o1.getPollCount() - o2.getPollCount());
+        this.clients = new HashSet<>();
+        this.timeServices = new HashSet<>();
     }
 
     /**
@@ -54,7 +54,7 @@ public class RegisteredServiceDTO {
      * @return boolean 是否删除成功
      */
     public boolean removeService(ServiceEntity service) {
-        SortedSet<ServiceEntity> goalService = getGoalService(service.getServiceName());
+        Set<ServiceEntity> goalService = getGoalService(service.getServiceName());
         ServiceEntity temp = null;
         for (ServiceEntity serviceEntity : goalService) {
             if (serviceEntity.getServiceId().equals(service.getServiceId())
@@ -75,7 +75,7 @@ public class RegisteredServiceDTO {
      * @return boolean 是否更新成功
      */
     public boolean heartbeat(ServiceEntity service) {
-        SortedSet<ServiceEntity> goalService = getGoalService(service.getServiceName());
+        Set<ServiceEntity> goalService = getGoalService(service.getServiceName());
         for (ServiceEntity serviceEntity : goalService) {
             if (serviceEntity.getServiceId().equals(service.getServiceId())
                     && serviceEntity.equalsAddress(service.getIpAddress(), service.getPort())) {
@@ -99,7 +99,7 @@ public class RegisteredServiceDTO {
             result.addAll(clients);
             return result;
         }
-        SortedSet<ServiceEntity> goalService = getGoalService(serviceName);
+        SortedSet<ServiceEntity> goalService = new TreeSet<>(getGoalService(serviceName));
         List<ServiceEntity> result = goalService.stream()
                 .filter(serviceEntity -> serviceEntity.getServiceName().equals(serviceName))
                 .collect(Collectors.toList());
@@ -119,7 +119,7 @@ public class RegisteredServiceDTO {
      * 获取目标服务queue，并清除过期服务：
      * 懒清除，只有在获取服务时才清除过期服务
      */
-    private SortedSet<ServiceEntity> getGoalService(String serviceName) {
+    private Set<ServiceEntity> getGoalService(String serviceName) {
         if (serviceName.equals("time-service")) {
             timeServices.removeIf(serviceEntity -> System.currentTimeMillis() - serviceEntity.getHeartBeatTime() > heart * 1000);
             return timeServices;
