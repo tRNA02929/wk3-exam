@@ -76,6 +76,6 @@ public class ServiceEntity implements Serializable, Comparable<ServiceEntity> {
 
     @Override
     public int compareTo(ServiceEntity o) {
-        return o.getPollCount() - pollCount;
+        return pollCount - o.getPollCount();
     }
 }
