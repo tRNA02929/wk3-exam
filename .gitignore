@@ -4,6 +4,10 @@ target/
 !**/src/test/**/target/
 !**/src/target/
 
+### Testing ###
+src/main/test/
+!**/src/main/test/
+
 ### IntelliJ IDEA ###
 .idea/
 
