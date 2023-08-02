@@ -1,5 +1,6 @@
 package com.ksyun.start.camp;
 
+import com.ksyun.start.camp.service.TimeServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 /**
@@ -36,7 +38,11 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Value("${server.port}")
     private int port;
 
+    private boolean isLogServiceOn = false;
+
     HttpEntity<HashMap<String, Object>> httpEntity;
+
+    LinkedHashMap<String, Object> logMap;
 
     public ServiceAppRunner() throws UnknownHostException {
     }
@@ -54,6 +60,13 @@ public class ServiceAppRunner implements ApplicationRunner {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpEntity = new HttpEntity<>(forObject, httpHeaders);
+
+        logMap = new LinkedHashMap<>();
+        logMap.put("serviceName", serviceName);
+        logMap.put("serviceId", serviceId);
+        logMap.put("datetime", null);
+        logMap.put("level", "info");
+        logMap.put("message", "Client status is OK");
     }
 
     @Override
@@ -71,5 +84,32 @@ public class ServiceAppRunner implements ApplicationRunner {
         Object o = restTemplate.exchange("http://localhost:8180/api/heartbeat",
                 HttpMethod.POST, httpEntity, Object.class);
         System.out.println(o);
+    }
+
+    @Scheduled(cron = "*/1 * * * * ?")
+    private void logging() {
+        // 3. 定期写日志
+        if (!isLogServiceOn) {
+            try {
+                String s = restTemplate.getForObject("http://localhost:8320/", String.class);
+                System.out.println(s);
+                isLogServiceOn = true;
+            } catch (Exception e) {
+                System.out.println("日志写入失败, 日志服务不可用");
+                return;
+            }
+        }
+        String datetime = new TimeServiceImpl().getDateTime("unix");
+        if (datetime == null) {
+            System.out.println("日志写入失败, 时间服务不可用");
+            return;
+        }
+        try {
+            logMap.put("datetime", datetime);
+            restTemplate.postForEntity("http://localhost:8320/api/logging", logMap, Object.class);
+        }catch (Exception e) {
+            System.out.println("日志写入失败, 日志服务不可用");
+            isLogServiceOn = false;
+        }
     }
 }
