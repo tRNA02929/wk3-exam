@@ -4,6 +4,10 @@ import com.ksyun.start.camp.rest.RestResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +39,10 @@ public class TimeServiceImpl implements TimeService {
         if (result.getCode() != 200) {
             return null;
         }
-        return (String) result.getData().get("result");
+        ZoneId zoneId = ZoneId.of("UTC+8");
+        Instant instant = Instant.ofEpochMilli((Long) result.getData().get("result"));
+        ZonedDateTime zonedDateTime = instant.atZone(zoneId);
+        return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 //        return null;
     }
 }
