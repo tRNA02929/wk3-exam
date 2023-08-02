@@ -100,9 +100,13 @@ public class RegisteredServiceDTO {
             return result;
         }
         SortedSet<ServiceEntity> goalService = new TreeSet<>(getGoalService(serviceName));
-        List<ServiceEntity> result = goalService.stream()
-                .filter(serviceEntity -> serviceEntity.getServiceName().equals(serviceName))
-                .collect(Collectors.toList());
+        List<ServiceEntity> result = new ArrayList<>();
+        if (goalService.isEmpty()) {
+            return result;
+        }
+        ServiceEntity serviceEntity = goalService.first();
+        serviceEntity.setPollCount(serviceEntity.getPollCount() + 1);
+        result.add(serviceEntity);
         return result;
     }
 
