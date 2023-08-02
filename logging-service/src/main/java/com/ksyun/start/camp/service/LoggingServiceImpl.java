@@ -29,8 +29,11 @@ public class LoggingServiceImpl implements LoggingService {
         if (isAll) {
             return new ArrayList(sortedLogSet);
         }
-        sortedLogSet.removeIf(data -> !service.equals(data.getServiceName()));
-        return new ArrayList(sortedLogSet);
+        sortedLogSet.removeIf(data -> !service.equals(data.getServiceId()));
+        if (sortedLogSet.size()<=5) {
+            return new ArrayList(sortedLogSet);
+        }
+        return new ArrayList(sortedLogSet).subList(0,5);
     }
 
 }
