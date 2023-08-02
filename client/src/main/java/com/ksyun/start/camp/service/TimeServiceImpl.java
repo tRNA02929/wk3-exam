@@ -27,7 +27,7 @@ public class TimeServiceImpl implements TimeService {
         // 4. 时区为 UTC+8
         // TODO
         RestTemplate restTemplate = new RestTemplate();
-        RestResult<List<Map<String, Object>>> restResult = restTemplate.getForObject("http://localhost:8200/api/discovery/?serviceName=time-service", RestResult.class);
+        RestResult<List<Map<String, Object>>> restResult = restTemplate.getForObject("http://localhost:8180/api/discovery/?serviceName=time-service", RestResult.class);
         if (restResult.getCode() != 200) {
             return null;
         }
@@ -40,7 +40,7 @@ public class TimeServiceImpl implements TimeService {
             return null;
         }
         ZoneId zoneId = ZoneId.of("UTC+8");
-        Instant instant = Instant.ofEpochMilli((Long) result.getData().get("result"));
+        Instant instant = Instant.ofEpochMilli(Long.parseLong((String) result.getData().get("result")));
         ZonedDateTime zonedDateTime = instant.atZone(zoneId);
         return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 //        return null;
