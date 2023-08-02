@@ -23,7 +23,7 @@ public class ClientServiceImpl implements ClientService {
         // 3. 组合相关信息返回
         String result = "Hello Kingsoft Clound Star Camp - " +
                 serviceId + " - " +
-                new TimeServiceImpl().getDateTime("full");
+                new TimeServiceImpl().getDateTime("unix");
         if (result == null) {
             return null;
         }
