@@ -60,7 +60,7 @@ public class ServiceAppRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         // 1. 向 registry 服务注册当前服务
         initialHttpEntity();
-        Object o = restTemplate.exchange("http://localhost:8200/api/register",
+        Object o = restTemplate.exchange("http://localhost:8180/api/register",
                 HttpMethod.POST, httpEntity, Object.class);
         System.out.println(o);
     }
@@ -68,7 +68,7 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Scheduled(cron = "*/3 * * * * ?")
     private void printNowDate() {
         // 2. 定期发送心跳逻辑
-        Object o = restTemplate.exchange("http://localhost:8200/api/heartbeat",
+        Object o = restTemplate.exchange("http://localhost:8180/api/heartbeat",
                 HttpMethod.POST, httpEntity, Object.class);
         System.out.println(o);
     }
