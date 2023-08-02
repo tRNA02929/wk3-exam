@@ -66,7 +66,7 @@ public class ServiceAppRunner implements ApplicationRunner {
     }
 
     @Scheduled(cron = "*/3 * * * * ?")
-    private void printNowDate() {
+    private void updateHeartbeat() {
         // 2. 定期发送心跳逻辑
         Object o = restTemplate.exchange("http://localhost:8180/api/heartbeat",
                 HttpMethod.POST, httpEntity, Object.class);
