@@ -39,10 +39,12 @@ public class TimeServiceImpl implements TimeService {
         if (result.getCode() != 200) {
             return null;
         }
-        ZoneId zoneId = ZoneId.of("UTC+8");
-        Instant instant = Instant.ofEpochMilli(Long.parseLong((String) result.getData().get("result")));
-        ZonedDateTime zonedDateTime = instant.atZone(zoneId);
-        return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
-//        return null;
+        if (style.equals("unix")) {
+            ZoneId zoneId = ZoneId.of("UTC+8");
+            Instant instant = Instant.ofEpochMilli(Long.parseLong((String) result.getData().get("result")));
+            ZonedDateTime zonedDateTime = instant.atZone(zoneId);
+            return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        }
+        return (String) result.getData().get("result");
     }
 }
