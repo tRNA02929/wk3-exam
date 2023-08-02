@@ -31,7 +31,7 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Value("${spring.application.name}")
     private String serviceName;
 
-    public static long serviceId;
+    public static String serviceId;
 
     private String ipAddress = InetAddress.getLocalHost().getHostAddress();
 
@@ -48,7 +48,7 @@ public class ServiceAppRunner implements ApplicationRunner {
     }
 
     static {
-        serviceId = UUID.randomUUID().getMostSignificantBits();
+        serviceId = String.valueOf(UUID.randomUUID().getMostSignificantBits());
     }
 
     private void initialHttpEntity() {
