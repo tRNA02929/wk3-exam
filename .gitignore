@@ -5,8 +5,8 @@ target/
 !**/src/target/
 
 ### Testing ###
-src/main/test/
-!**/src/main/test/
+src/test/
+!**/src/test/
 
 ### IntelliJ IDEA ###
 .idea/
