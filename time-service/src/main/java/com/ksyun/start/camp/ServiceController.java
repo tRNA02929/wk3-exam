@@ -14,7 +14,7 @@ public class ServiceController {
     // hello
     @RequestMapping("/")
     public String index() {
-        return "time-service";
+        return "this is time-service";
     }
 
     // 在此实现简单时间服务的接口逻辑
@@ -26,7 +26,7 @@ public class ServiceController {
                 .serviceId(ServiceAppRunner.serviceId)
                 .result(result)
                 .build();
-        log.info("getDateTime: {}", result);
+//        log.info("getDateTime: {}", result);
         return RestResult.success().descr("获取时间成功").data(apiResponse);
     }
 }

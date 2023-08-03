@@ -17,8 +17,8 @@ public class LoggingServiceImpl implements LoggingService {
         this.logSet = new HashSet<>();
     }
 
-    public boolean logging(LogEntity logEntity) {
-        logEntity.setLogId(logSet.size());
+    public boolean logging(LogEntity logEntity, int logId) {
+        logEntity.setLogId(logId);
         return logSet.add(logEntity);
     }
 
