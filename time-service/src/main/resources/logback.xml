@@ -6,7 +6,7 @@
 
     <appender name="infoConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
-            <pattern>%green(%d{yyyy-MM-dd HH:mm:ss.SSS}) | %5p | %blue(%c{0}) | %m %n</pattern>
+            <pattern>%green(%d{yyyy-MM-dd HH:mm:ss.SSS}) | %highlight(%-5p) | %blue(%c{0}) | %m%n</pattern>
         </encoder>
     </appender>
 
@@ -16,9 +16,7 @@
         </encoder>
     </appender>
 
-        <logger name="com.ksyun.start" level="info"/>
-    <!--    </logger>-->
-    <!--    <logger name="com.ksyun.train.controller" level="error"/>-->
+    <logger name="com.ksyun.start" level="info"/>
 
     <root level="info">
         <appender-ref ref="infoConsoleAppender"/>
