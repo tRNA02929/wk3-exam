@@ -2,10 +2,12 @@ package com.ksyun.start.camp;
 
 import com.ksyun.start.camp.rest.RestResult;
 import com.ksyun.start.camp.service.SimpleTimeServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 public class ServiceController {
 
@@ -24,6 +26,7 @@ public class ServiceController {
                 .serviceId(ServiceAppRunner.serviceId)
                 .result(result)
                 .build();
+        log.info("getDateTime: {}", result);
         return RestResult.success().descr("获取时间成功").data(apiResponse);
     }
 }
