@@ -73,7 +73,7 @@ public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
                 log.info("registry 服务返回结果: {}", restResult.getDescr());
                 isRegister = true;
             } catch (Exception e) {
-                log.info("registry 服务未启动");
+                log.error("registry 服务未启动");
             }
         }
     }
@@ -87,7 +87,7 @@ public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
                         HttpMethod.POST, httpEntity, RestResult.class).getBody();
                 log.info("registry 服务返回结果: {}", restResult.getDescr());
             } catch (Exception e) {
-                log.info("registry 服务已下线");
+                log.error("registry 服务已下线");
                 isRegister = false;
                 run(null);
             }
@@ -102,7 +102,7 @@ public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
                     HttpMethod.POST, httpEntity, RestResult.class).getBody();
             log.info("registry 服务返回结果: {}", restResult.getDescr());
         } catch (Exception e) {
-            log.info("registry 服务已下线");
+            log.warn("registry 服务已下线");
             isRegister = false;
         }
     }
