@@ -6,10 +6,13 @@ target/
 
 ### Testing ###
 src/test/
-!**/src/test/
+*/src/test/
 
 ### IntelliJ IDEA ###
 .idea/
+*.iws
+*.iml
+*.ipr
 
 ### Eclipse ###
 .apt_generated
