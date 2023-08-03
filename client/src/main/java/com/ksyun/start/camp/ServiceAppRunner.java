@@ -1,6 +1,7 @@
 package com.ksyun.start.camp;
 
 import com.ksyun.start.camp.service.TimeServiceImpl;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -24,7 +25,7 @@ import java.util.UUID;
  */
 @Component
 @EnableScheduling
-public class ServiceAppRunner implements ApplicationRunner {
+public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -111,5 +112,13 @@ public class ServiceAppRunner implements ApplicationRunner {
             System.out.println("日志写入失败, 日志服务不可用");
             isLogServiceOn = false;
         }
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        // 4. 服务关闭时向 registry 发送取消注册请求
+        Object o = restTemplate.exchange("http://localhost:8180/api/unregister",
+                HttpMethod.POST, httpEntity, Object.class);
+        System.out.println(o);
     }
 }

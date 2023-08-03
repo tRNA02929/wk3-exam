@@ -1,5 +1,6 @@
 package com.ksyun.start.camp;
 
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -22,7 +23,7 @@ import java.util.UUID;
  */
 @Component
 @EnableScheduling
-public class ServiceAppRunner implements ApplicationRunner {
+public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -69,6 +70,14 @@ public class ServiceAppRunner implements ApplicationRunner {
     private void updateHeartbeat() {
         // 2. 定期发送心跳逻辑
         Object o = restTemplate.exchange("http://localhost:8180/api/heartbeat",
+                HttpMethod.POST, httpEntity, Object.class);
+        System.out.println(o);
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        // 3. 服务关闭时向 registry 发送取消注册请求
+        Object o = restTemplate.exchange("http://localhost:8180/api/unregister",
                 HttpMethod.POST, httpEntity, Object.class);
         System.out.println(o);
     }
