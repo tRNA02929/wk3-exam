@@ -1,5 +1,7 @@
 package com.ksyun.start.camp;
 
+import com.ksyun.start.camp.rest.RestResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -21,6 +23,7 @@ import java.util.UUID;
 /**
  * 服务启动运行逻辑
  */
+@Slf4j
 @Component
 @EnableScheduling
 public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
