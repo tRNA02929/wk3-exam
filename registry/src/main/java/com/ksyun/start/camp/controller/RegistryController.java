@@ -1,6 +1,7 @@
 package com.ksyun.start.camp.controller;
 
 import com.ksyun.start.camp.entity.ServiceEntity;
+import com.ksyun.start.camp.rest.RestResult;
 import com.ksyun.start.camp.service.RegistryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,7 +19,6 @@ public class RegistryController {
         return "hello";
     }
 
-    //    @RequestMapping
     @PostMapping("/api/test")
     public Object Test(@RequestBody String serviceName) {
         System.out.println(serviceName);
@@ -28,7 +28,7 @@ public class RegistryController {
     @PostMapping("/api/register")
     public Object register(@RequestBody ServiceEntity serviceEntity) {
         if (!vaild(serviceEntity)) {
-            return "invalid param";
+            return RestResult.failure().descr("invalid param");
         }
         return registryService.register(serviceEntity);
     }
@@ -36,7 +36,7 @@ public class RegistryController {
     @PostMapping("/api/unregister")
     public Object unregister(@RequestBody ServiceEntity serviceEntity) {
         if (!vaild(serviceEntity)) {
-            return "invalid param";
+            return RestResult.failure().descr("invalid param");
         }
         return registryService.unregister(serviceEntity);
     }
