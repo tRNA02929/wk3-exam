@@ -20,7 +20,7 @@ public class ServiceController {
     @Autowired
     private LoggingServiceImpl loggingService;
 
-    private AtomicInteger logId = new AtomicInteger(1);
+    private AtomicInteger logId = new AtomicInteger(0);
 
     // TODO: 实现日志服务 API
     @RequestMapping("/")
@@ -30,7 +30,7 @@ public class ServiceController {
 
     @PostMapping("/api/logging")
     public Object logging(@RequestBody LogEntity logEntity) {
-        boolean b = loggingService.logging(logEntity, logId.getAndAdd(1));
+        boolean b = loggingService.logging(logEntity, logId.incrementAndGet());
         if (b) {
             log.info("记录日志成功: {}", logEntity);
             return RestResult.success().descr("记录日志成功").data(logEntity);
