@@ -90,7 +90,7 @@ public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
         }
     }
 
-    @Scheduled(cron = "*/3 * * * * ?")
+    @Scheduled(cron = "*/50 * * * * ?")
     private void updateHeartbeat() {
         // 2. 定期发送心跳逻辑
         if (isRegister) {
@@ -112,7 +112,6 @@ public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
         if (!isLogServiceOn) {
             try {
                 String s = restTemplate.getForObject("http://localhost:8320/", String.class);
-                System.out.println(s);
                 isLogServiceOn = true;
             } catch (Exception e) {
                 log.warn("日志写入失败, 日志服务不可用");

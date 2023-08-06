@@ -78,7 +78,7 @@ public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
         }
     }
 
-    @Scheduled(cron = "*/10 * * * * ?")
+    @Scheduled(cron = "*/50 * * * * ?")
     private void updateHeartbeat() {
         // 2. 定期发送心跳逻辑
         if (isRegister) {
