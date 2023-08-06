@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,17 +19,14 @@ public class RegisteredServiceDTO {
     @Value("${heart}")
     private int heart;
 
-    // 使用HashSet，作为存储结构
-    // 使用TreeSet，按照轮询次数自动排序
+    // 使用线程安全的ConcurrentSkipListSet，作为存储结构
     private Set<ServiceEntity> clients;
 
     private Set<ServiceEntity> timeServices;
 
     public RegisteredServiceDTO() {
-//        this.clients = new TreeSet<>((o1, o2) -> o1.getPollCount() - o2.getPollCount());
-//        this.timeServices = new TreeSet<>((o1, o2) -> o1.getPollCount() - o2.getPollCount());
-        this.clients = new HashSet<>();
-        this.timeServices = new HashSet<>();
+        this.clients = new ConcurrentSkipListSet<>();
+        this.timeServices = new ConcurrentSkipListSet<>();
     }
 
     /**
@@ -99,7 +97,7 @@ public class RegisteredServiceDTO {
             result.addAll(clients);
             return result;
         }
-        SortedSet<ServiceEntity> goalService = new TreeSet<>(getGoalService(serviceName));
+        ConcurrentSkipListSet<ServiceEntity> goalService = new ConcurrentSkipListSet<>(getGoalService(serviceName));
         List<ServiceEntity> result = new ArrayList<>();
         if (goalService.isEmpty()) {
             return result;
