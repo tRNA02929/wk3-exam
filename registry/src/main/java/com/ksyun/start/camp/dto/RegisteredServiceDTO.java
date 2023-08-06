@@ -62,6 +62,9 @@ public class RegisteredServiceDTO {
                 break;
             }
         }
+        if (temp == null) {
+            return false;
+        }
         return goalService.remove(temp);
     }
 
