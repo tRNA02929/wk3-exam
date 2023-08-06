@@ -1,9 +1,10 @@
 package com.ksyun.start.camp.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class LogEntity implements Comparable<LogEntity> {
 
     private Integer logId;
