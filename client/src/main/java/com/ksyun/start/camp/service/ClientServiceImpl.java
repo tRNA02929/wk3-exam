@@ -21,12 +21,12 @@ public class ClientServiceImpl implements ClientService {
         // 1. 调用 TimeService 获取远端服务返回的时间
         // 2. 获取到自身的 serviceId 信息
         // 3. 组合相关信息返回
-        String result = "Hello Kingsoft Clound Star Camp - [" +
-                serviceId + "] - " +
-                new TimeServiceImpl().getDateTime("full");
-        if (result == null) {
+        String datetime = new TimeServiceImpl().getDateTime("unix");
+        if (datetime == null) {
             return null;
         }
+        String result = "Hello Kingsoft Clound Star Camp - [" +
+                serviceId + "] - " + datetime.substring(0, 19);
         Map<String, Object> map = new HashMap<>();
         map.put("result", result);
         return map;
