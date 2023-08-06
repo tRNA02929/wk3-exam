@@ -47,8 +47,8 @@ public class RegistryController {
     }
 
     @RequestMapping("/api/discovery")
-    public Object discovery(String serviceName) {
-        return registryService.discovery(serviceName);
+    public Object discovery(String name) {
+        return registryService.discovery(name);
     }
 
     private boolean vaild(ServiceEntity serviceEntity) {
