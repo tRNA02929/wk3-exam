@@ -86,6 +86,9 @@ public class ServiceAppRunner implements ApplicationRunner, DisposableBean {
                 RestResult restResult = restTemplate.exchange("http://localhost:8180/api/heartbeat",
                         HttpMethod.POST, httpEntity, RestResult.class).getBody();
                 log.info("registry 服务返回结果: {}", restResult.getDescr());
+                if (restResult.getCode()!=200){
+                    run(null);
+                }
             } catch (Exception e) {
                 log.error("registry 服务已下线");
                 isRegister = false;
