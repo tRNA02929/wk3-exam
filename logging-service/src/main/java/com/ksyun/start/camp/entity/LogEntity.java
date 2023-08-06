@@ -46,6 +46,9 @@ public class LogEntity implements Comparable<LogEntity> {
      */
     @Override
     public int compareTo(LogEntity o) {
+        if (equals(o)) {
+            return 0;
+        }
         return o.getLogId() - logId;
     }
 }
