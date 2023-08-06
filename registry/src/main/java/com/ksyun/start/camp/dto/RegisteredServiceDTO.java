@@ -76,7 +76,8 @@ public class RegisteredServiceDTO {
      * @return boolean 是否更新成功
      */
     public boolean heartbeat(ServiceEntity service) {
-        Set<ServiceEntity> goalService = getGoalService(service.getServiceName());
+        Set<ServiceEntity> goalService = new HashSet<>(clients);
+        goalService.addAll(timeServices);
         for (ServiceEntity serviceEntity : goalService) {
             if (serviceEntity.getServiceId().equals(service.getServiceId())
                     && serviceEntity.equalsAddress(service.getIpAddress(), service.getPort())) {
