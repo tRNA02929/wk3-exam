@@ -27,7 +27,7 @@ public class TimeServiceImpl implements TimeService {
         // 4. 时区为 UTC+8
         // TODO
         RestTemplate restTemplate = new RestTemplate();
-        RestResult<List<Map<String, Object>>> restResult = restTemplate.getForObject("http://localhost:8180/api/discovery/?serviceName=time-service", RestResult.class);
+        RestResult<List<Map<String, Object>>> restResult = restTemplate.getForObject("http://localhost:8180/api/discovery/?name=time-service", RestResult.class);
         if (restResult.getCode() != 200) {
             return null;
         }
